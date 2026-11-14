@@ -1,8 +1,172 @@
 
 {% extends "base.html" %}
 
-{% block title %}Login | Moon Ya Clinic{% endblock %}
+{% block title %}Dashboard | Moon Ya Clinic{% endblock %}
 
 {% block content %}
+
+<div class="dashboard-container">
+
+    <!-- Greeting -->
+    <header class="dashboard-header">
+        <h1>Hello, <span class="username">XAEXAEXAE</span>!</h1>
+        <p>Here is your health overview.</p>
+    </header>
+
+    <div class="dashboard-layout">
+
+        <!-- LEFT: Astronaut and health statistics -->
+        <section class="health-visualization">
+
+            <img
+                src="{{ url_for('static', filename='media/body_center.png') }}"
+                alt="Astronaut illustration"
+                class="body-image"
+            >
+
+            <div class="stat-card stat-bone">
+                <h3>Bone Density</h3>
+                <p>1.05 g/cm³</p>
+                <span>Current measurement</span>
+            </div>
+
+            <div class="stat-card stat-radiation">
+                <h3>Radiation</h3>
+                <p>2.3 mSv</p>
+                <span>Current exposure</span>
+            </div>
+
+            <div class="stat-card stat-hormones">
+                <h3>Hormones</h3>
+                <p>Normal</p>
+                <span>Endocrine status</span>
+            </div>
+
+            <div class="stat-card stat-other">
+                <h3>Other</h3>
+                <p>98%</p>
+                <span>Additional indicator</span>
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT: Planet assignments and updates -->
+        <section class="dashboard-right">
+
+            <!-- Planet / constellation explanations -->
+            <div class="planet-panel">
+
+                <h2>Planets & Constellations</h2>
+                <p class="panel-subtitle">
+                    Your health represented through the universe.
+                </p>
+
+                <div class="planet-grid">
+
+                    <div class="planet-item">
+                        <div class="planet-circle mercury"></div>
+                        <div class="planet-description">
+                            <h3>Mercury</h3>
+                            <p>Health status explanation will appear here.</p>
+                        </div>
+                    </div>
+
+                    <div class="planet-item">
+                        <div class="planet-circle venus"></div>
+                        <div class="planet-description">
+                            <h3>Venus</h3>
+                            <p>Health status explanation will appear here.</p>
+                        </div>
+                    </div>
+
+                    <div class="planet-item">
+                        <div class="planet-circle earth"></div>
+                        <div class="planet-description">
+                            <h3>Earth</h3>
+                            <p>Health status explanation will appear here.</p>
+                        </div>
+                    </div>
+
+                    <div class="planet-item">
+                        <div class="planet-circle mars"></div>
+                        <div class="planet-description">
+                            <h3>Mars</h3>
+                            <p>Health status explanation will appear here.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Update health measurements -->
+            <div class="update-panel">
+
+                <h2>Update Health Information</h2>
+                <p class="panel-subtitle">
+                    Enter your latest health measurements.
+                </p>
+
+                <form class="update-form" action="#" method="POST">
+
+                    <div class="update-form-group">
+                        <label for="bone">Bone Density</label>
+                        <input
+                            type="number"
+                            step="any"
+                            id="bone"
+                            name="bone_density"
+                            placeholder="Enter value"
+                        >
+                    </div>
+
+                    <div class="update-form-group">
+                        <label for="radiation">Radiation Level</label>
+                        <input
+                            type="number"
+                            step="any"
+                            id="radiation"
+                            name="radiation"
+                            placeholder="Enter value"
+                        >
+                    </div>
+
+                    <div class="update-form-group">
+                        <label for="hormones">Hormonal Measurement</label>
+                        <input
+                            type="number"
+                            step="any"
+                            id="hormones"
+                            name="hormones"
+                            placeholder="Enter value"
+                        >
+                    </div>
+
+                    <div class="update-form-group">
+                        <label for="other">Other Indicator</label>
+                        <input
+                            type="number"
+                            step="any"
+                            id="other"
+                            name="other"
+                            placeholder="Enter value"
+                        >
+                    </div>
+
+                    <button type="submit" class="update-button">
+                        Update
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
+    </div>
+
+</div>
 
 {% endblock %}

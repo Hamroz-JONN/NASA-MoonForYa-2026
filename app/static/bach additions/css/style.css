@@ -286,3 +286,303 @@ body {
     margin-top: 8px;
     line-height: 1.3;
 }
+
+
+/* =================================
+   DASHBOARD
+================================= */
+
+.dashboard-container {
+    width: 100%;
+    color: #444444;
+}
+
+/* Greeting */
+
+.dashboard-header {
+    margin-bottom: 30px;
+    color: #FFFFFF;
+}
+
+.dashboard-header h1 {
+    font-size: 30px;
+    font-weight: 500;
+}
+
+.dashboard-header .username {
+    font-weight: 700;
+}
+
+.dashboard-header p {
+    font-size: 14px;
+    color: #CCCCCC;
+    margin-top: 8px;
+}
+
+
+/* Main layout */
+
+.dashboard-layout {
+    display: grid;
+    grid-template-columns: 1.1fr 0.9fr;
+    gap: 25px;
+    align-items: start;
+}
+
+
+/* =================================
+   HEALTH VISUALIZATION
+================================= */
+
+.health-visualization {
+    position: relative;
+    min-height: 540px;
+    width: 100%;
+}
+
+.body-image {
+    position: absolute;
+    width: 420px;
+    height: 650px;
+    object-fit: contain;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+}
+
+/* Health statistic cards */
+
+.stat-card {
+    position: absolute;
+    width: 190px;
+    background-color: #E8E8E8;
+    border: 1px solid #BDBDBD;
+    border-radius: 10px;
+    padding: 15px;
+    color: #444444;
+}
+
+.stat-card h3 {
+    font-size: 10px;
+    font-weight: 600;
+    margin-bottom: 6px;
+}
+
+.stat-card p {
+    font-size: 15px;
+    font-weight: 600;
+    margin-bottom: 5px;
+}
+
+.stat-card span {
+    font-size: 8px;
+    color: #777777;
+}
+
+/* Four positions around astronaut */
+
+.stat-bone {
+    top: 35px;
+    left: 0;
+}
+
+.stat-radiation {
+    top: 35px;
+    right: 0;
+}
+
+.stat-hormones {
+    bottom: 35px;
+    left: 0;
+}
+
+.stat-other {
+    bottom: 35px;
+    right: 0;
+}
+
+
+/* =================================
+   RIGHT COLUMN
+================================= */
+
+.dashboard-right {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.planet-panel,
+.update-panel {
+    background-color: #E8E8E8;
+    border: 1px solid #BDBDBD;
+    border-radius: 12px;
+    padding: 22px;
+}
+
+.planet-panel h2,
+.update-panel h2 {
+    font-size: 20px;
+    color: #444444;
+    margin-bottom: 6px;
+}
+
+.panel-subtitle {
+    font-size: 12px;
+    color: #777777;
+    margin-bottom: 22px;
+}
+
+
+/* =================================
+   PLANETS / CONSTELLATIONS
+================================= */
+
+.planet-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 22px 15px;
+}
+
+.planet-item {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+}
+
+.planet-circle {
+    width: 48px;
+    height: 48px;
+    border: 3px solid #777777;
+    border-radius: 50%;
+    flex-shrink: 0;
+}
+
+.mercury {
+    border-color: #A58A70;
+}
+
+.venus {
+    border-color: #C58A9A;
+}
+
+.earth {
+    border-color: #477B65;
+}
+
+.mars {
+    border-color: #B83232;
+}
+
+.planet-description h3 {
+    font-size: 14px;
+    margin-bottom: 4px;
+    color: #444444;
+}
+
+.planet-description p {
+    font-size: 11px;
+    color: #777777;
+    line-height: 1.4;
+}
+
+
+/* =================================
+   UPDATE FORM
+================================= */
+
+.update-form {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
+}
+
+.update-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 7px;
+}
+
+.update-form-group label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #444444;
+}
+
+.update-form-group input {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #999999;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+    color: #333333;
+    font-size: 13px;
+    outline: none;
+}
+
+.update-form-group input:focus {
+    border-color: #555555;
+}
+
+.update-button {
+    grid-column: 2;
+    justify-self: end;
+    padding: 9px 25px;
+    background-color: #C90000;
+    color: #FFFFFF;
+    border: none;
+    border-radius: 5px;
+    font-size: 13px;
+    cursor: pointer;
+    transition: background-color 0.2s;
+}
+
+.update-button:hover {
+    background-color: #A00000;
+}
+
+
+/* =================================
+   RESPONSIVE
+================================= */
+
+@media (max-width: 1100px) {
+
+    .dashboard-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .health-visualization {
+        min-height: 500px;
+    }
+
+}
+
+@media (max-width: 600px) {
+
+    .health-visualization {
+        min-height: 650px;
+    }
+
+    .body-image {
+        width: 180px;
+        height: 320px;
+    }
+
+    .stat-card {
+        width: 145px;
+    }
+
+    .planet-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .update-form {
+        grid-template-columns: 1fr;
+    }
+
+    .update-button {
+        grid-column: 1;
+    }
+
+}
