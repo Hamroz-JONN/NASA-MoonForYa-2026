@@ -1,0 +1,69 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+
+{% block content %}
+<div class="card">
+  <h1>Dashboard</h1>
+  <form method="post" novalidate>
+    {{ form.hidden_tag() }}
+
+    <div class="number-grid">
+      {% for field in form.number_fields %}
+        <div>
+          <label for="{{ field.id }}">{{ field.label.text }}</label>
+          {{ field(type="number", step="any", inputmode="decimal", placeholder="0") }}
+          {% for e in field.errors %}<p class="error">{{ e }}</p>{% endfor %}
+        </div>
+      {% endfor %}
+    </div>
+
+    {{ form.submit(class="button") }}
+  </form>
+</div>
+
+{% if latest %}
+<div class="card">
+  <h2>Your latest entry</h2>
+  <div class="chart-wrap">
+    <canvas id="valuesChart" aria-label="Bar chart of your latest four values" role="img"></canvas>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Your recent submissions</h2>
+  <ul class="submissions">
+    {% for s in recent %}
+      <li>
+        <span>{% for v in s.values %}<strong>{{ '%g' % v }}</strong>{% if not loop.last %} · {% endif %}{% endfor %}</span>
+        <span class="muted">{{ s.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
+      </li>
+    {% endfor %}
+  </ul>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
+<script>
+  const labels = {{ labels | tojson }};
+  const values = {{ latest.values | tojson }};
+
+  new Chart(document.getElementById("valuesChart"), {
+    type: "bar",
+    data: {
+      labels: labels,
+      datasets: [{
+        label: "Value",
+        data: values,
+        backgroundColor: ["#2f5bea", "#16a34a", "#f59e0b", "#db2777"],
+        borderRadius: 6,
+      }],
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: { y: { beginAtZero: true } },
+    },
+  });
+</script>
+{% endif %}
+{% endblock %}
