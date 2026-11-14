@@ -1,69 +1,140 @@
 {% extends "base.html" %}
-{% block title %}Dashboard{% endblock %}
+
+{% block title %}Dashboard | Moon Ya Clinic{% endblock %}
+
+{% macro stat(value, unit="") -%}
+    {% if value is not none %}{{ '%g' % value }}{% if unit %} {{ unit }}{% endif %}{% else %}—{% endif %}
+{%- endmacro %}
 
 {% block content %}
-<div class="card">
-  <h1>Dashboard</h1>
-  <form method="post" novalidate>
-    {{ form.hidden_tag() }}
 
-    <div class="number-grid">
-      {% for field in form.number_fields %}
-        <div>
-          <label for="{{ field.id }}">{{ field.label.text }}</label>
-          {{ field(type="number", step="any", inputmode="decimal", placeholder="0") }}
-          {% for e in field.errors %}<p class="error">{{ e }}</p>{% endfor %}
-        </div>
-      {% endfor %}
+<div class="dashboard-container">
+
+    <!-- Greeting -->
+    <header class="dashboard-header">
+        <h1>Hello, <span class="username">{{ current_user.email.split('@')[0] }}</span>!</h1>
+        <p>Here is your health overview.</p>
+    </header>
+
+    <div class="dashboard-layout">
+
+        <!-- LEFT: Astronaut and health statistics -->
+        <section class="health-visualization">
+
+            <img
+                src="{{ url_for('static', filename='media/body_center.png') }}"
+                alt="Astronaut illustration"
+                class="body-image"
+            >
+
+            <div class="stat-card stat-bone">
+                <h3>Bone Density</h3>
+                <p>{{ stat(latest.value_1 if latest else none, "g/cm³") }}</p>
+                <span>Current measurement</span>
+            </div>
+
+            <div class="stat-card stat-radiation">
+                <h3>Radiation</h3>
+                <p>{{ stat(latest.value_2 if latest else none, "mSv") }}</p>
+                <span>Current exposure</span>
+            </div>
+
+            <div class="stat-card stat-hormones">
+                <h3>Hormones</h3>
+                <p>{{ stat(latest.value_3 if latest else none) }}</p>
+                <span>Endocrine status</span>
+            </div>
+
+            <div class="stat-card stat-other">
+                <h3>Other</h3>
+                <p>{{ stat(latest.value_4 if latest else none) }}</p>
+                <span>Additional indicator</span>
+            </div>
+
+        </section>
+
+
+        <!-- RIGHT: Planet assignments and updates -->
+        <section class="dashboard-right">
+
+            <!-- Planet / constellation explanations -->
+            <div class="planet-panel">
+
+                <h2>Planets &amp; Constellations</h2>
+                <p class="panel-subtitle">
+                    Your health represented through the universe.
+                </p>
+
+                <div class="planet-grid">
+
+                    <div class="planet-item">
+                        <div class="planet-circle mercury"></div>
+                        <div class="planet-description">
+                            <h3>Mercury</h3>
+                            <p>Health status explanation will appear here.</p>
+                        </div>
+                    </div>
+
+                    <div class="planet-item">
+                        <div class="planet-circle venus"></div>
+                        <div class="planet-description">
+                            <h3>Venus</h3>
+                            <p>Health status explanation will appear here.</p>
+                        </div>
+                    </div>
+
+                    <div class="planet-item">
+                        <div class="planet-circle earth"></div>
+                        <div class="planet-description">
+                            <h3>Earth</h3>
+                            <p>Health status explanation will appear here.</p>
+                        </div>
+                    </div>
+
+                    <div class="planet-item">
+                        <div class="planet-circle mars"></div>
+                        <div class="planet-description">
+                            <h3>Mars</h3>
+                            <p>Health status explanation will appear here.</p>
+                        </div>
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Update health measurements -->
+            <div class="update-panel">
+
+                <h2>Update Health Information</h2>
+                <p class="panel-subtitle">
+                    Enter your latest health measurements.
+                </p>
+
+                <form class="update-form" method="post" novalidate>
+                    {{ form.hidden_tag() }}
+
+                    {% for field in form.number_fields %}
+                    <div class="update-form-group">
+                        <label for="{{ field.id }}">{{ field.label.text }}</label>
+                        {{ field(type="number", step="any", inputmode="decimal", placeholder="Enter value") }}
+                        {% for e in field.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+                    </div>
+                    {% endfor %}
+
+                    <button type="submit" class="update-button">
+                        Update
+                    </button>
+
+                </form>
+
+            </div>
+
+        </section>
+
     </div>
 
-    {{ form.submit(class="button") }}
-  </form>
 </div>
 
-{% if latest %}
-<div class="card">
-  <h2>Your latest entry</h2>
-  <div class="chart-wrap">
-    <canvas id="valuesChart" aria-label="Bar chart of your latest four values" role="img"></canvas>
-  </div>
-</div>
-
-<div class="card">
-  <h2>Your recent submissions</h2>
-  <ul class="submissions">
-    {% for s in recent %}
-      <li>
-        <span>{% for v in s.values %}<strong>{{ '%g' % v }}</strong>{% if not loop.last %} · {% endif %}{% endfor %}</span>
-        <span class="muted">{{ s.created_at.strftime('%Y-%m-%d %H:%M') }}</span>
-      </li>
-    {% endfor %}
-  </ul>
-</div>
-
-<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.1/dist/chart.umd.min.js"></script>
-<script>
-  const labels = {{ labels | tojson }};
-  const values = {{ latest.values | tojson }};
-
-  new Chart(document.getElementById("valuesChart"), {
-    type: "bar",
-    data: {
-      labels: labels,
-      datasets: [{
-        label: "Value",
-        data: values,
-        backgroundColor: ["#2f5bea", "#16a34a", "#f59e0b", "#db2777"],
-        borderRadius: 6,
-      }],
-    },
-    options: {
-      responsive: true,
-      maintainAspectRatio: false,
-      plugins: { legend: { display: false } },
-      scales: { y: { beginAtZero: true } },
-    },
-  });
-</script>
-{% endif %}
 {% endblock %}

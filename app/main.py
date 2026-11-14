@@ -27,18 +27,25 @@ def dashboard():
         )
         db.session.add(submission)
         db.session.commit()
-        flash("Thanks! Your form was submitted.", "success")
+        flash("Your health information was updated.", "success")
         # Redirect after POST so a page refresh doesn't resubmit
         return redirect(url_for("main.dashboard"))
 
-    recent = db.session.scalars(
+    latest = db.session.scalar(
         db.select(Submission)
         .filter_by(user_id=current_user.id)
         .order_by(Submission.created_at.desc())
-        .limit(5)
-    ).all()
-    latest = recent[0] if recent else None
-    labels = [f.label.text for f in form.number_fields]
-    return render_template(
-        "main/dashboard.html", form=form, recent=recent, latest=latest, labels=labels
+        .limit(1)
     )
+    return render_template("main/dashboard.html", form=form, latest=latest)
+
+
+@bp.route("/history")
+@login_required
+def history():
+    submissions = db.session.scalars(
+        db.select(Submission)
+        .filter_by(user_id=current_user.id)
+        .order_by(Submission.created_at.desc())
+    ).all()
+    return render_template("main/history.html", submissions=submissions)

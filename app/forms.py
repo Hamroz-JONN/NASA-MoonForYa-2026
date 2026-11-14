@@ -12,10 +12,10 @@ class LoginForm(FlaskForm):
 
 class SubmissionForm(FlaskForm):
     # InputRequired (not DataRequired) so that 0 is accepted as a valid number
-    value_1 = FloatField("Value 1", validators=[InputRequired(message="Enter a number.")])
-    value_2 = FloatField("Value 2", validators=[InputRequired(message="Enter a number.")])
-    value_3 = FloatField("Value 3", validators=[InputRequired(message="Enter a number.")])
-    value_4 = FloatField("Value 4", validators=[InputRequired(message="Enter a number.")])
+    value_1 = FloatField("Bone Density", validators=[InputRequired(message="Enter a number.")])
+    value_2 = FloatField("Radiation Level", validators=[InputRequired(message="Enter a number.")])
+    value_3 = FloatField("Hormonal Measurement", validators=[InputRequired(message="Enter a number.")])
+    value_4 = FloatField("Other Indicator", validators=[InputRequired(message="Enter a number.")])
     submit = SubmitField("Submit")
 
     @property

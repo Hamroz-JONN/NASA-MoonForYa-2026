@@ -1,0 +1,35 @@
+{% extends "base.html" %}
+
+{% block title %}History | Moon Ya Clinic{% endblock %}
+
+{% block content %}
+
+{% if submissions %}
+<div class="history-container">
+
+    {% for s in submissions %}
+    <div class="history-card">
+        <h2>{{ s.created_at.strftime('%b') | upper }}</h2>
+        <p class="history-date">{{ s.created_at.strftime('%Y-%m-%d %H:%M') }}</p>
+
+        <div class="history-details">
+            <div class="health-indicator"></div>
+            <div class="history-info">
+                <p><span>Bone density</span><strong>{{ '%g' % s.value_1 }} g/cm³</strong></p>
+                <p><span>Radiation</span><strong>{{ '%g' % s.value_2 }} mSv</strong></p>
+                <p><span>Hormones</span><strong>{{ '%g' % s.value_3 }}</strong></p>
+                <p><span>Other</span><strong>{{ '%g' % s.value_4 }}</strong></p>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+
+</div>
+{% else %}
+<p class="history-empty">
+    No entries yet. Add your first measurements on the
+    <a href="{{ url_for('main.dashboard') }}">dashboard</a>.
+</p>
+{% endif %}
+
+{% endblock %}

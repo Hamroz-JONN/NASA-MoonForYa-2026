@@ -1,23 +1,47 @@
 {% extends "base.html" %}
-{% block title %}Log in{% endblock %}
+
+{% block title %}Login | Moon Ya Clinic{% endblock %}
 
 {% block content %}
-<div class="card narrow">
-  <h1>Log in</h1>
-  <form method="post" novalidate>
-    {{ form.hidden_tag() }}
 
-    <label for="email">{{ form.email.label.text }}</label>
-    {{ form.email(id="email", autocomplete="email", autofocus=true) }}
-    {% for e in form.email.errors %}<p class="error">{{ e }}</p>{% endfor %}
+<div class="login-container">
 
-    <label for="password">{{ form.password.label.text }}</label>
-    {{ form.password(id="password", autocomplete="current-password") }}
-    {% for e in form.password.errors %}<p class="error">{{ e }}</p>{% endfor %}
+    <div class="login-card">
 
-    <label class="checkbox">{{ form.remember() }} {{ form.remember.label.text }}</label>
+        <img
+            src="{{ url_for('static', filename='media/emptyuser.png') }}"
+            alt="User"
+            class="login-icon"
+        >
 
-    {{ form.submit(class="button") }}
-  </form>
+        <h2>Welcome Back</h2>
+        <p class="login-subtitle">Please log in to your account</p>
+
+        <form class="login-form" method="post" novalidate>
+            {{ form.hidden_tag() }}
+
+            <div class="form-group">
+                <label for="email">{{ form.email.label.text }}</label>
+                {{ form.email(id="email", type="email", autocomplete="email", autofocus=true, placeholder="Enter your email") }}
+                {% for e in form.email.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+            </div>
+
+            <div class="form-group">
+                <label for="password">{{ form.password.label.text }}</label>
+                {{ form.password(id="password", autocomplete="current-password", placeholder="Enter your password") }}
+                {% for e in form.password.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+            </div>
+
+            <label class="remember-row">{{ form.remember() }} {{ form.remember.label.text }}</label>
+
+            <button type="submit" class="login-button">
+                Login
+            </button>
+
+        </form>
+
+    </div>
+
 </div>
+
 {% endblock %}
