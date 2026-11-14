@@ -2,8 +2,10 @@
 
 {% block title %}Dashboard | Moon Ya Clinic{% endblock %}
 
-{% macro stat(value, unit="") -%}
-    {% if value is not none %}{{ '%g' % value }}{% if unit %} {{ unit }}{% endif %}{% else %}—{% endif %}
+{% from "main/_stats_form.html" import stats_form %}
+
+{% macro stat(value, unit) -%}
+    {% if space %}{{ value }} {{ unit }}{% else %}—{% endif %}
 {%- endmacro %}
 
 {% block content %}
@@ -28,27 +30,27 @@
             >
 
             <div class="stat-card stat-bone">
-                <h3>Bone Density</h3>
-                <p>{{ stat(latest.value_1 if latest else none, "g/cm³") }}</p>
+                <h3>Blood Pressure</h3>
+                <p>{{ stat(space.blood_pressure, "mmHg") }}</p>
                 <span>Current measurement</span>
             </div>
 
             <div class="stat-card stat-radiation">
                 <h3>Radiation</h3>
-                <p>{{ stat(latest.value_2 if latest else none, "mSv") }}</p>
+                <p>{{ stat(space.radiation_dose, "mSv") }}</p>
                 <span>Current exposure</span>
             </div>
 
             <div class="stat-card stat-hormones">
                 <h3>Hormones</h3>
-                <p>{{ stat(latest.value_3 if latest else none) }}</p>
-                <span>Endocrine status</span>
+                <p>{{ stat(space.estrogen_level, "pg/mL") }}</p>
+                <span>Estrogen level</span>
             </div>
 
             <div class="stat-card stat-other">
-                <h3>Other</h3>
-                <p>{{ stat(latest.value_4 if latest else none) }}</p>
-                <span>Additional indicator</span>
+                <h3>Heart Rate</h3>
+                <p>{{ stat(space.heart_rate, "bpm") }}</p>
+                <span>Current measurement</span>
             </div>
 
         </section>
@@ -104,30 +106,46 @@
             </div>
 
 
-            <!-- Update health measurements -->
-            <div class="update-panel">
+            <!-- Earth vs space comparison bars -->
+            {% if bars %}
+            <div class="compare-panel">
 
-                <h2>Update Health Information</h2>
+                <h2>Earth vs Space</h2>
                 <p class="panel-subtitle">
-                    Enter your latest health measurements.
+                    A full bar means no change from your Earth baseline.
+                    <a href="{{ url_for('main.baseline') }}">Edit baseline</a>
                 </p>
 
-                <form class="update-form" method="post" novalidate>
-                    {{ form.hidden_tag() }}
-
-                    {% for field in form.number_fields %}
-                    <div class="update-form-group">
-                        <label for="{{ field.id }}">{{ field.label.text }}</label>
-                        {{ field(type="number", step="any", inputmode="decimal", placeholder="Enter value") }}
-                        {% for e in field.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+                <div class="compare-list">
+                    {% for bar in bars %}
+                    <div class="compare-item">
+                        <div class="compare-head">
+                            <span class="compare-label">{{ bar.label }}</span>
+                            <span class="compare-values">
+                                Earth {{ bar.earth }}{% if bar.unit %} {{ bar.unit }}{% endif %}
+                                &rarr; Space {{ bar.space }}{% if bar.unit %} {{ bar.unit }}{% endif %}
+                            </span>
+                        </div>
+                        <div class="compare-bar" role="img" aria-label="{{ bar.label }}: {{ bar.percent }}% match with Earth baseline">
+                            <div class="compare-fill" style="width: {{ bar.percent }}%"></div>
+                        </div>
                     </div>
                     {% endfor %}
+                </div>
 
-                    <button type="submit" class="update-button">
-                        Update
-                    </button>
+            </div>
+            {% endif %}
 
-                </form>
+
+            <!-- Update space measurements -->
+            <div class="update-panel">
+
+                <h2>Update Space Stats</h2>
+                <p class="panel-subtitle">
+                    Enter your latest health measurements from space.
+                </p>
+
+                {{ stats_form(form, "Update") }}
 
             </div>
 

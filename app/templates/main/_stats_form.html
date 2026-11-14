@@ -1,0 +1,21 @@
+{% macro stats_form(form, button_text) %}
+<form class="update-form" method="post" novalidate>
+    {{ form.hidden_tag() }}
+
+    {% for field in form.stat_fields %}
+    <div class="update-form-group">
+        <label for="{{ field.id }}">{{ field.label.text }}</label>
+        {% if field.type == "SelectField" %}
+            {{ field() }}
+        {% else %}
+            {{ field(type="number", step="1", min="0", inputmode="numeric", placeholder="Enter value") }}
+        {% endif %}
+        {% for e in field.errors %}<p class="field-error">{{ e }}</p>{% endfor %}
+    </div>
+    {% endfor %}
+
+    <button type="submit" class="update-button">
+        {{ button_text }}
+    </button>
+</form>
+{% endmacro %}

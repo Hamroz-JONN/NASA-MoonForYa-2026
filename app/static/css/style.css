@@ -684,3 +684,85 @@ body {
 .history-empty a {
     color: #FFFFFF;
 }
+
+
+/* =================================
+   EARTH BASELINE + EARTH VS SPACE BARS
+================================= */
+
+.baseline-container {
+    max-width: 640px;
+    margin: 20px auto;
+}
+
+.update-form-group select {
+    width: 100%;
+    padding: 11px;
+    border: 1px solid #999999;
+    border-radius: 6px;
+    background-color: #F8F8F8;
+    color: #333333;
+    font-size: 13px;
+    outline: none;
+}
+
+.update-form-group select:focus {
+    border-color: #555555;
+}
+
+.compare-panel {
+    background-color: #E8E8E8;
+    border: 1px solid #BDBDBD;
+    border-radius: 12px;
+    padding: 22px;
+}
+
+.compare-panel h2 {
+    font-size: 20px;
+    color: #444444;
+    margin-bottom: 6px;
+}
+
+.panel-subtitle a {
+    color: #171B65;
+}
+
+.compare-list {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+}
+
+.compare-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 10px;
+    margin-bottom: 5px;
+}
+
+.compare-label {
+    font-size: 12px;
+    font-weight: 600;
+    color: #444444;
+}
+
+.compare-values {
+    font-size: 11px;
+    color: #777777;
+    text-align: right;
+}
+
+.compare-bar {
+    height: 12px;
+    background-color: #CFCFCF;
+    border: 1px solid #BDBDBD;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.compare-fill {
+    height: 100%;
+    background-color: #C5A52E;
+    border-radius: 5px;
+}

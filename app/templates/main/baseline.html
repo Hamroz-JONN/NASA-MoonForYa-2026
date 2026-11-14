@@ -1,0 +1,27 @@
+{% extends "base.html" %}
+{% from "main/_stats_form.html" import stats_form %}
+
+{% block title %}Earth Baseline Stats | Moon Ya Clinic{% endblock %}
+
+{% block content %}
+
+<div class="baseline-container">
+
+    <div class="update-panel">
+
+        <h2>Earth Baseline Stats</h2>
+        <p class="panel-subtitle">
+            {% if has_baseline %}
+                Update your health measurements from Earth. Your space stats are compared against these.
+            {% else %}
+                Before you start, enter your health measurements from Earth. Your space stats will be compared against these.
+            {% endif %}
+        </p>
+
+        {{ stats_form(form, "Save baseline") }}
+
+    </div>
+
+</div>
+
+{% endblock %}
